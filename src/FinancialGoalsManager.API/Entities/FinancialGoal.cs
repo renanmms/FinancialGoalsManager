@@ -20,5 +20,10 @@ namespace FinancialGoalsManager.API.Entities
             Title = title;
             TargetQuantity = targetQuantity;
         }
+        
+        public void SetAsDeleted()
+        {
+            IsDeleted = true;
+        }
     }
 }
