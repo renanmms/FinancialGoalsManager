@@ -1,7 +1,7 @@
 using FinancialGoalsManager.API.Endpoints;
-using FinancialGoalsManager.API.Entities;
 using FinancialGoalsManager.API.Persistence;
 using FinancialGoalsManager.API.Repositories;
+using FinancialGoalsManager.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
