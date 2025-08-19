@@ -39,5 +39,13 @@ namespace FinancialGoalsManager.API.Repositories
 
             return _dbContext.SaveChanges();
         }
+
+        public int Delete(int id)
+        {
+            var financialGoal = _dbContext.FinancialGoals.SingleOrDefault(f => f.Id == id);
+            financialGoal?.SetAsDeleted();
+
+            return _dbContext.SaveChanges();
+        }
     }
 }

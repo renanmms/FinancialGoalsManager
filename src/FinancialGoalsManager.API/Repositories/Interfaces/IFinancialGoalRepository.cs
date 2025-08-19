@@ -8,5 +8,6 @@ namespace FinancialGoalsManager.API.Repositories.Interfaces
         IEnumerable<FinancialGoal> GetAll();
         int Create(FinancialGoal financialGoal);
         int Update(int id, FinancialGoal financialGoal);
+        int Delete(int id);
     }
 }
