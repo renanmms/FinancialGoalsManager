@@ -1,5 +1,6 @@
 using FinancialGoalsManager.API.Entities;
 using FinancialGoalsManager.API.Persistence;
+using FinancialGoalsManager.API.Repositories.Interfaces;
 
 namespace FinancialGoalsManager.API.Repositories
 {
@@ -9,6 +10,11 @@ namespace FinancialGoalsManager.API.Repositories
         public FinancialGoalRepository(FinancialGoalsDbContext dbContext)
         {
             _dbContext = dbContext;    
+        }
+
+        public IEnumerable<FinancialGoal> GetAll()
+        {
+            return _dbContext.FinancialGoals.ToList();
         }
 
         public int Create(FinancialGoal financialGoal)
