@@ -47,6 +47,13 @@ namespace FinancialGoalsManager.API.Endpoints
             })
             .WithName("Create")
             .WithOpenApi();
+
+            app.MapDelete("/financialgoal/{id:int}", (IFinancialGoalRepository repository, int id) =>
+            {       
+                repository.Delete(id);
+                
+                return Results.Ok("Successfully deleted!");
+            });
         }
     }
 }
