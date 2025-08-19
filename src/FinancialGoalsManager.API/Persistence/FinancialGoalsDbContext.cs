@@ -10,6 +10,11 @@ namespace FinancialGoalsManager.API.Persistence
             
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FinancialGoal>().HasQueryFilter(f => !f.IsDeleted); 
+        }
+        
         public DbSet<FinancialGoal> FinancialGoals { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
     }
