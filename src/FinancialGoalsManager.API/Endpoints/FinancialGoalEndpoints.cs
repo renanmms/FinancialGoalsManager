@@ -2,6 +2,7 @@ using FinancialGoalsManager.API.DTO.InputModels;
 using FinancialGoalsManager.API.DTO.ViewModels;
 using FinancialGoalsManager.API.Entities;
 using FinancialGoalsManager.API.Repositories;
+using FinancialGoalsManager.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinancialGoalsManager.API.Endpoints
@@ -10,6 +11,15 @@ namespace FinancialGoalsManager.API.Endpoints
     {
         public static void Map(WebApplication app)
         {
+            app.MapGet("/financialgoal", (IFinancialGoalRepository repository) =>
+            {
+                var financialGoals = repository.GetAll();
+
+                return Results.Ok(financialGoals);
+            })
+            .WithName("GetAll")
+            .WithOpenApi();
+            
             app.MapGet("/financialgoal/{id:int}", (int id, IFinancialGoalRepository repository) =>
             {
                 var financialGoal = repository.Get(id);
@@ -25,7 +35,7 @@ namespace FinancialGoalsManager.API.Endpoints
                 
                 return Results.Ok(model);
             })
-            .WithName("GetFinancialGoal")
+            .WithName("GetById")
             .WithOpenApi();
 
             app.MapPost("/financialgoal", ([FromBody]CreateFinancialGoalInputModel model, IFinancialGoalRepository repository) => 
@@ -35,7 +45,7 @@ namespace FinancialGoalsManager.API.Endpoints
                 
                 return Results.Created("/financialgoal/{id}", new { id });
             })
-            .WithName("CreateFinancialGoal")
+            .WithName("Create")
             .WithOpenApi();
         }
     }
