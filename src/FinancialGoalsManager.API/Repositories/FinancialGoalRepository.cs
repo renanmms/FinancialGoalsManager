@@ -1,3 +1,4 @@
+using FinancialGoalsManager.API.DTO.InputModels;
 using FinancialGoalsManager.API.Entities;
 using FinancialGoalsManager.API.Persistence;
 using FinancialGoalsManager.API.Repositories.Interfaces;
@@ -32,10 +33,10 @@ namespace FinancialGoalsManager.API.Repositories
             return financialGoal;
         }
 
-        public int Update(int id, FinancialGoal financialGoal)
+        public int Update(int id, UpdateFinancialGoalInputModel model)
         {
-            var entity = _dbContext.FinancialGoals.SingleOrDefault(fg => fg.Id == id);
-            entity?.Update(financialGoal.Title, financialGoal.TargetQuantity);
+            var financialGoal = _dbContext.FinancialGoals.SingleOrDefault(fg => fg.Id == id);
+            financialGoal?.Update(model.Title, model.TargetQuantity);
 
             return _dbContext.SaveChanges();
         }

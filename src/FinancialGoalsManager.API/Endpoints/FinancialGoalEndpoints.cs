@@ -1,7 +1,6 @@
 using FinancialGoalsManager.API.DTO.InputModels;
 using FinancialGoalsManager.API.DTO.ViewModels;
 using FinancialGoalsManager.API.Entities;
-using FinancialGoalsManager.API.Repositories;
 using FinancialGoalsManager.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,7 +47,16 @@ namespace FinancialGoalsManager.API.Endpoints
             .WithName("Create")
             .WithOpenApi();
 
-            app.MapDelete("/financialgoal/{id:int}", (IFinancialGoalRepository repository, int id) =>
+            app.MapPut("/financialgoal/{id:int}", (int id, [FromBody]UpdateFinancialGoalInputModel model,  IFinancialGoalRepository repository) =>
+            {
+                repository.Update(id, model);
+                
+                return Results.NoContent();
+            })
+            .WithName("Update")
+            .WithOpenApi();
+
+            app.MapDelete("/financialgoal/{id:int}", (int id, IFinancialGoalRepository repository) =>
             {       
                 repository.Delete(id);
                 
