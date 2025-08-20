@@ -30,7 +30,8 @@ namespace FinancialGoalsManager.API.Endpoints
                 var model = new FinancialGoalDetailsViewModel(
                     financialGoal.Id,
                     financialGoal.Title,
-                    financialGoal.TargetQuantity);
+                    financialGoal.TargetQuantity,
+                    financialGoal.CreatedAt);
                 
                 return Results.Ok(model);
             })

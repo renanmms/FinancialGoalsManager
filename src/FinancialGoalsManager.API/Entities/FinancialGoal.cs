@@ -6,6 +6,7 @@ namespace FinancialGoalsManager.API.Entities
         {
             Title = title;
             TargetQuantity = targetQuantity;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public int Id { get; set; }
