@@ -12,6 +12,7 @@ namespace FinancialGoalsManager.API.Endpoints
         {
             app.MapGet("/financialgoal", (IFinancialGoalRepository repository) =>
             {
+                // TODO: Use a DTO for list
                 var financialGoals = repository.GetAll();
 
                 return Results.Ok(financialGoals);
@@ -62,6 +63,14 @@ namespace FinancialGoalsManager.API.Endpoints
                 repository.Delete(id);
                 
                 return Results.Ok("Successfully deleted!");
+            });
+            
+            app.MapPost("/financialgoal/{id:int}/transaction", (int id, [FromBody]CreateTransactionInputModel model, IFinancialGoalRepository repository) =>
+            {
+                var transaction = new Transaction(id, model.Quantity, model.TransactionType);
+                repository.CreateTransaction(transaction);
+
+                return Results.NoContent();
             });
         }
     }
