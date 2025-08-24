@@ -10,5 +10,6 @@ namespace FinancialGoalsManager.API.Repositories.Interfaces
         int Create(FinancialGoal financialGoal);
         int Update(int id, UpdateFinancialGoalInputModel model);
         int Delete(int id);
+        int CreateTransaction(Transaction transaction);
     }
 }

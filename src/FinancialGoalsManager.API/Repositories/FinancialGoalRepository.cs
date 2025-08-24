@@ -2,20 +2,19 @@ using FinancialGoalsManager.API.DTO.InputModels;
 using FinancialGoalsManager.API.Entities;
 using FinancialGoalsManager.API.Persistence;
 using FinancialGoalsManager.API.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinancialGoalsManager.API.Repositories
 {
-    public class FinancialGoalRepository : IFinancialGoalRepository
+    public class FinancialGoalRepository(FinancialGoalsDbContext dbContext) : IFinancialGoalRepository
     {
-        private FinancialGoalsDbContext _dbContext;
-        public FinancialGoalRepository(FinancialGoalsDbContext dbContext)
-        {
-            _dbContext = dbContext;    
-        }
+        private readonly FinancialGoalsDbContext _dbContext = dbContext;
 
         public IEnumerable<FinancialGoal> GetAll()
         {
-            return _dbContext.FinancialGoals.ToList();
+            return _dbContext.FinancialGoals
+                .Include(f => f.Transactions)
+                .ToList();
         }
 
         public int Create(FinancialGoal financialGoal)
@@ -28,7 +27,9 @@ namespace FinancialGoalsManager.API.Repositories
 
         public FinancialGoal? Get(int id)
         {
-            var financialGoal = _dbContext.FinancialGoals.SingleOrDefault(fg => fg.Id == id);
+            var financialGoal = _dbContext.FinancialGoals
+                .Include(f => f.Transactions)
+                .SingleOrDefault(fg => fg.Id == id);
 
             return financialGoal;
         }
@@ -46,6 +47,13 @@ namespace FinancialGoalsManager.API.Repositories
             var financialGoal = _dbContext.FinancialGoals.SingleOrDefault(f => f.Id == id);
             financialGoal?.SetAsDeleted();
 
+            return _dbContext.SaveChanges();
+        }
+
+        public int CreateTransaction(Transaction transaction)
+        {
+            _dbContext.Transactions.Add(transaction);
+            
             return _dbContext.SaveChanges();
         }
     }
