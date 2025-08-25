@@ -1,6 +1,6 @@
 using FinancialGoalsManager.API.DTO.InputModels;
-using FinancialGoalsManager.API.DTO.ViewModels;
 using FinancialGoalsManager.API.Entities;
+using FinancialGoalsManager.API.Mappers;
 using FinancialGoalsManager.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,11 +28,8 @@ namespace FinancialGoalsManager.API.Endpoints
                     return Results.NotFound();
                 }
                 
-                var model = new FinancialGoalDetailsViewModel(
-                    financialGoal.Id,
-                    financialGoal.Title,
-                    financialGoal.TargetQuantity,
-                    financialGoal.CreatedAt);
+                var mapper = new FinancialGoalMapper();
+                var model = mapper.FinancialGoalToDto(financialGoal);
                 
                 return Results.Ok(model);
             })
