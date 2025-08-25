@@ -8,4 +8,5 @@ namespace FinancialGoalsManager.API.Mappers;
 public partial class FinancialGoalMapper
 {
     public partial FinancialGoalDetailsViewModel FinancialGoalToDto(FinancialGoal financialGoal);
+    public partial IEnumerable<FinancialGoalDetailsViewModel> FinancialGoalToListDto(IEnumerable<FinancialGoal> financialGoal);
 }

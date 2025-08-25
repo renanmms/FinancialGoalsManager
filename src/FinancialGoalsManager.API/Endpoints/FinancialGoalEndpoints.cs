@@ -11,11 +11,13 @@ namespace FinancialGoalsManager.API.Endpoints
         public static void Map(WebApplication app)
         {
             app.MapGet("/financialgoal", (IFinancialGoalRepository repository) =>
-            {
-                // TODO: Use a DTO for list
+            { 
                 var financialGoals = repository.GetAll();
 
-                return Results.Ok(financialGoals);
+                var mapper = new FinancialGoalMapper();
+                var financialGoalsDto = mapper.FinancialGoalToListDto(financialGoals);
+
+                return Results.Ok(financialGoalsDto);
             })
             .WithName("GetAll")
             .WithOpenApi();
