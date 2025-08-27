@@ -2,6 +2,7 @@ using FinancialGoalsManager.API.DTO.InputModels;
 using FinancialGoalsManager.API.Entities;
 using FinancialGoalsManager.API.Mappers;
 using FinancialGoalsManager.API.Repositories.Interfaces;
+using FinancialGoalsManager.API.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinancialGoalsManager.API.Endpoints
@@ -63,9 +64,17 @@ namespace FinancialGoalsManager.API.Endpoints
                 
                 return Results.Ok("Successfully deleted!");
             });
-            
+
             app.MapPost("/financialgoal/{id:int}/transaction", (int id, [FromBody]CreateTransactionInputModel model, IFinancialGoalRepository repository) =>
             {
+                var validator = new CreateTransactionValidator();
+                
+                var result = validator.Validate(model);
+                if (!result.IsValid)
+                {
+                    return Results.BadRequest(result.Errors);
+                }
+                
                 var transaction = new Transaction(id, model.Quantity, model.TransactionType);
                 repository.CreateTransaction(transaction);
 
