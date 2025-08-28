@@ -39,8 +39,16 @@ namespace FinancialGoalsManager.API.Endpoints
             .WithName("GetById")
             .WithOpenApi();
 
-            app.MapPost("/financialgoal", ([FromBody]CreateFinancialGoalInputModel model, IFinancialGoalRepository repository) => 
-            { 
+            app.MapPost("/financialgoal", ([FromBody]CreateFinancialGoalInputModel model, IFinancialGoalRepository repository) =>
+            {
+                var validator = new CreateFinancialGoalValidator();
+                
+                var result = validator.Validate(model);
+                if (!result.IsValid)
+                {
+                    return Results.BadRequest(result.Errors);
+                }
+                
                 var financialGoal = new FinancialGoal(model.Title, model.TargetQuantity);
                 var id = repository.Create(financialGoal);
                 
@@ -49,8 +57,16 @@ namespace FinancialGoalsManager.API.Endpoints
             .WithName("Create")
             .WithOpenApi();
 
-            app.MapPut("/financialgoal/{id:int}", (int id, [FromBody]UpdateFinancialGoalInputModel model,  IFinancialGoalRepository repository) =>
-            {
+            app.MapPut("/financialgoal/{id:int}", (int id, [FromBody]UpdateFinancialGoalInputModel model, IFinancialGoalRepository repository) =>
+            { 
+                var validator = new UpdateFinancialGoalValidator();
+                
+                var result = validator.Validate(model);
+                if (!result.IsValid)
+                {
+                    return Results.BadRequest(result.Errors);
+                }
+                
                 repository.Update(id, model);
                 
                 return Results.NoContent();
