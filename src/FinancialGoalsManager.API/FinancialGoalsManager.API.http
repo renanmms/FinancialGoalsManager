@@ -1,6 +1,18 @@
-@FinancialGoalsManager.API_HostAddress = http://localhost:5144
+@hostname=localhost
+@port=7291
+@host={{hostname}}:{{port}}
 
-GET {{FinancialGoalsManager.API_HostAddress}}/weatherforecast/
+###
+
+GET https://{{host}}/financialgoal
 Accept: application/json
 
 ###
+
+POST https://{{host}}/financialgoal
+Content-Type: application/json
+
+{
+  "title": "test 2 from visual studio http requests",
+  "targetQuantity": 20000
+}
