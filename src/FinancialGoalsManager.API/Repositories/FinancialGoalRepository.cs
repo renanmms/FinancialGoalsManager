@@ -10,11 +10,10 @@ namespace FinancialGoalsManager.API.Repositories
     {
         private readonly FinancialGoalsDbContext _dbContext = dbContext;
 
-        public IEnumerable<FinancialGoal> GetAll()
+        public IQueryable<FinancialGoal> GetAll()
         {
             return _dbContext.FinancialGoals
-                .Include(f => f.Transactions)
-                .ToList();
+                .Include(f => f.Transactions);
         }
 
         public int Create(FinancialGoal financialGoal)

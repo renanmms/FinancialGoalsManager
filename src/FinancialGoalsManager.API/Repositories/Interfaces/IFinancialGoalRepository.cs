@@ -6,7 +6,7 @@ namespace FinancialGoalsManager.API.Repositories.Interfaces
     public interface IFinancialGoalRepository
     {
         FinancialGoal? Get(int id);
-        IEnumerable<FinancialGoal> GetAll();
+        IQueryable<FinancialGoal> GetAll();
         int Create(FinancialGoal financialGoal);
         int Update(int id, UpdateFinancialGoalInputModel model);
         int Delete(int id);
