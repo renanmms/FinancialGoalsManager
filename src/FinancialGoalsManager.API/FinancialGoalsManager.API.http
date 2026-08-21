@@ -9,10 +9,40 @@ Accept: application/json
 
 ###
 
+GET https://{{host}}/financialgoal/1
+Accept: application/json
+
+###
+
 POST https://{{host}}/financialgoal
 Content-Type: application/json
 
 {
-  "title": "test 2 from visual studio http requests",
+  "title": "test 1",
   "targetQuantity": 20000
 }
+
+###
+
+PUT https://{{host}}/financialgoal/1
+Content-Type: application/json
+
+{
+  "title": "changed title",
+  "targetQuantity": 30000
+}
+
+###
+
+POST https://{{host}}/financialgoal/1/transaction
+Content-Type: application/json
+
+{
+  "quantity": 10,
+  "transactionType": 1
+}
+
+###
+
+DELETE https://{{host}}/financialgoal/1
+Accept: application/json
