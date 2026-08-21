@@ -7,6 +7,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/Dotnet.gitignore
 
+## Rider folders
+.idea
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -30,6 +33,7 @@ artifacts/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
+*.user
 
 # NuGet Packages
 *.nupkg
